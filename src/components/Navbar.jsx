@@ -1,7 +1,10 @@
 import React from 'react'
-import {Flex, HStack, Heading, useColorModeValue} from '@chakra-ui/react';
+import {Flex, HStack, Heading, useColorModeValue, Input} from '@chakra-ui/react';
 import {ColorModeSwitcher} from "../ColorModeSwitcher"
+import { Link } from 'react-router-dom';
+import { useApp } from '../context/AppContextProvider';
 const Navbar = () => {
+  const {updateFilter, filters} = useApp();
   return (
     <Flex
       justifyContent={'space-between'}
@@ -17,7 +20,21 @@ const Navbar = () => {
             IMDB
         </Heading>
       </HStack>
-      <ColorModeSwitcher justifySelf="flex-end" />
+      <Input type='text' placeholder='Search movies by title, cast and director' width='auto' name='search' onChange={updateFilter} value={filters.search}/>
+      <Flex>
+        <HStack spacing={4} >
+          <Link to={'/'}>
+            Movies
+          </Link>
+          <Link to={'/watch-list'}>
+          Watch list
+          </Link>
+          <Link to={'/starred-movies'}>
+            StarredMovies
+          </Link>
+        </HStack>
+        <ColorModeSwitcher justifySelf="flex-end" />
+      </Flex>
     </Flex>
   )
 }
